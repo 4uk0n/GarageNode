@@ -1,8 +1,13 @@
 var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+var gpio = require('onoff').Gpio;
+var button = new(gpio(21, 'out'))
 
-server.listen(80);
+
+server.listen(8080, function () {
+  console.log(‘server running on port 8080’);
+});
 //ROUTES
 app.get('/',function(req,res,next){
 res.sendFile(__dirname + '/public/index.html');
@@ -20,13 +25,10 @@ app.get('/socket.io.js',function(req,res,next){
 res.sendFile(__dirname + '/node_modules/socket.io-client/dist/socket.io.js');
 });
 
-// app.listen(80, function () {
-//   console.log(‘server running on port 3000’);
-// })
+function open() {
+  button.writeSync(1)
+}
 
-io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
-});
+function close() {
+  button.writeSync(0)
+}
