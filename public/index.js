@@ -8,10 +8,10 @@ function btnClick() {
   if (num == 0){
     document.getElementById("demo").className = "btn btn-success btn-lg";
 	  num += 1;
-	  socket.emit("light", 1);
+	  socket.emit("toggleDoor", 1);
   } else {
     document.getElementById("demo").className = "btn btn-primary btn-lg";
 	  num = 0;
-	  socket.emit("light", 0);
+	  socket.emit("toggleDoor", 0);
   }
 }

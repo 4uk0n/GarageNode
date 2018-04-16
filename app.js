@@ -27,18 +27,11 @@ res.sendFile(__dirname + '/public/socket.io.js');
 
 io.sockets.on('connection',function (socket){
 	var lightvalue = 0;
-	socket.on('light', function(data) {
-		lightvalue = data;
-		if (lightvalue == 1) {
-			open(lightvalue)
-			console.log(lightvalue);
-		}
-		else {
-			open(lightvalue)
-			console.log(lightvalue);
+	socket.on('toggleDoor', function(data) {
+    button.writeSync(1);
+    console.log(button.readSync());
+    sleep(250);
+    button.writeSync(0);
 		}
 	});
 });
-function open(data) {
-  button.writeSync(data)
-}
